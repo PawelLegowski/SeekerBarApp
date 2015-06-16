@@ -19,7 +19,7 @@
         android:progressDrawable="@drawable/progress"
         android:thumb="@drawable/thumb"
         app:textSize="25sp"
-        app:textColor="#888888"
+        app:textColor="#FF888888"
         app:textAlignLeft="false"/>
 
 </RelativeLayout>
