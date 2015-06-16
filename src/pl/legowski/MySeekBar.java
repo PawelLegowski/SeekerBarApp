@@ -243,16 +243,15 @@ public class MySeekBar extends SeekBar {
 					iTargetProgress = 0;
 				else
 					iTargetProgress = (int)(0.5*getMax());
-				if(iTargetProgress!=iCurrentProgress)
+				if(iProgressPosition != iTargetProgress)
 				{
-					if(iProgressPosition != iTargetProgress)
-					{
-						iProgressPosition = iTargetProgress;					
-						iTimer = 0;
-						handler.removeCallbacks(runnableIncrementTime);
-						handler.postDelayed(runnableIncrementTime, 1000);
-					}
-					
+					iProgressPosition = iTargetProgress;					
+					iTimer = 0;
+					handler.removeCallbacks(runnableIncrementTime);
+					handler.postDelayed(runnableIncrementTime, 1000);
+				}
+				if(iTargetProgress!=iCurrentProgress)
+				{										
 					ObjectAnimator animator = ObjectAnimator.ofInt(this, "progress", iCurrentProgress, iTargetProgress);
 					animator.setInterpolator(new DecelerateInterpolator());
 					animator.setDuration(500);
