@@ -226,7 +226,8 @@ public class MySeekBar extends SeekBar {
 						bIsPerformingLongClick = false;
 						handler.removeCallbacks(runnableEnableDragView);
 					}
-					return true;
+					else
+						return true;
 				}
 				break;
 			case MotionEvent.ACTION_UP:
