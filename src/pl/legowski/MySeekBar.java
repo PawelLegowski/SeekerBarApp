@@ -257,7 +257,7 @@ public class MySeekBar extends SeekBar {
 					animator.setDuration(500);
 					animator.start();					
 				}
-			return ans;
+				return ans;
 			}
     	}
 		return super.onTouchEvent(event);
