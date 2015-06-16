@@ -27,10 +27,10 @@ import android.view.animation.DecelerateInterpolator;
 public class MySeekBar extends SeekBar {
 	private int iTimer;
 	private boolean bIsDraggingView, bIsPerformingLongClick;
-    private Handler handler;    
-    private float fTouchX, fTouchY;
-    private float fTouchStartX, fTouchStartY;
-    private float fTextSize;
+	private Handler handler;    
+	private float fTouchX, fTouchY;
+	private float fTouchStartX, fTouchStartY;
+	private float fTextSize;
 	private Paint textPaint;
 	private boolean bAlignLeft;
 	private int iProgressPosition;
@@ -38,7 +38,7 @@ public class MySeekBar extends SeekBar {
 	/**
 	 * Runnable for scheduling time incrementation
 	 */
-    Runnable runnableIncrementTime = new Runnable() {
+	Runnable runnableIncrementTime = new Runnable() {
 		
 		@Override
 		public void run() {
@@ -157,9 +157,9 @@ public class MySeekBar extends SeekBar {
      */
     private void init(TypedArray params) {
     	handler			= new Handler();
-        handler.postDelayed(runnableIncrementTime, 1000);
+    	handler.postDelayed(runnableIncrementTime, 1000);
     	
-    	textPaint 	= new Paint();
+        textPaint 	= new Paint();
 		textPaint.setTypeface(Typeface.DEFAULT_BOLD);			
         
 		if(params==null)
@@ -183,96 +183,95 @@ public class MySeekBar extends SeekBar {
 		}
 		textPaint.setTextSize(fTextSize);
 		if(bAlignLeft)
-        {
-        	textPaint.setTextAlign(Align.LEFT);
-        	setPadding((int) (getPaddingLeft() + fTextSize), getPaddingTop(),
+		{
+			textPaint.setTextAlign(Align.LEFT);
+			setPadding((int) (getPaddingLeft() + fTextSize), getPaddingTop(),
         			getPaddingRight(), getPaddingBottom());
-        }
-        else
-        {
-        	textPaint.setTextAlign(Align.RIGHT);
-        	setPadding(getPaddingLeft(), getPaddingTop(), (int) (getPaddingRight()
+		}
+		else
+		{
+			textPaint.setTextAlign(Align.RIGHT);
+			setPadding(getPaddingLeft(), getPaddingTop(), (int) (getPaddingRight()
         			+ fTextSize), getPaddingBottom());
-        }
+		}
 		iProgressPosition = getProgress();
 	}       
 
 	@Override
-    public boolean onTouchEvent(MotionEvent event) {
-    	if(isEnabled())
+	public boolean onTouchEvent(MotionEvent event) {
+		if(isEnabled())
     	{
-			switch (event.getAction())
-			{
-			case MotionEvent.ACTION_DOWN:				
-				fTouchX = event.getRawX();
-				fTouchY = event.getRawY();
-				fTouchStartX = fTouchX;
-				fTouchStartY = fTouchY;
-				bIsPerformingLongClick = true;
-				handler.postDelayed(runnableEnableDragView, 500);
-				return true;
-			case MotionEvent.ACTION_MOVE:
-				if(bIsDraggingView)
-				{
-					setX(getX() + event.getRawX() - fTouchX);
-					setY(getY() + event.getRawY() - fTouchY);
-					fTouchX = event.getRawX();
-					fTouchY = event.getRawY();
-					return true;
-				}
-				else if(bIsPerformingLongClick)
-				{
-					fTouchX = event.getRawX();
-					fTouchY = event.getRawY();
-					if(Math.sqrt(Math.pow(fTouchStartX - fTouchX,2) 
+    		switch (event.getAction())
+    		{
+    		case MotionEvent.ACTION_DOWN:				
+    			fTouchX = event.getRawX();
+    			fTouchY = event.getRawY();
+    			fTouchStartX = fTouchX;
+    			fTouchStartY = fTouchY;
+    			bIsPerformingLongClick = true;
+    			handler.postDelayed(runnableEnableDragView, 500);
+    			return true;
+    		case MotionEvent.ACTION_MOVE:
+    			if(bIsDraggingView)
+    			{
+    				setX(getX() + event.getRawX() - fTouchX);
+    				setY(getY() + event.getRawY() - fTouchY);
+    				fTouchX = event.getRawX();
+    				fTouchY = event.getRawY();
+    				return true;
+    			}
+    			else if(bIsPerformingLongClick)
+    			{
+    				fTouchX = event.getRawX();
+    				fTouchY = event.getRawY();
+    				if(Math.sqrt(Math.pow(fTouchStartX - fTouchX,2) 
 							+ Math.pow(fTouchStartY - fTouchY, 2)) > 50)
-					{
-						bIsPerformingLongClick = false;
-						handler.removeCallbacks(runnableEnableDragView);
-					}
-					return true;
-				}
-				
-			break;					
-			case MotionEvent.ACTION_UP:
-				int iCurrentProgress, iTargetProgress;				
-				bIsPerformingLongClick = false;
-				handler.removeCallbacks(runnableEnableDragView);
-				if(bIsDraggingView)
-				{
-					setX(getX()+event.getRawX() - fTouchX);
-					setY(getY()+event.getRawY() - fTouchY);
-					bIsDraggingView = false;	
-					return true;
-				}				
-				boolean ans = super.onTouchEvent(event);
-				iCurrentProgress=getProgress();
-				if(iCurrentProgress > 0.75*getMax())
-					iTargetProgress = getMax();
-				else if(iCurrentProgress < 0.25*getMax())				
-					iTargetProgress = 0;
-				else
-					iTargetProgress = (int)(0.5 * getMax());
-				if(iProgressPosition != iTargetProgress)
-				{
-					iProgressPosition = iTargetProgress;					
-					iTimer = 0;
-					handler.removeCallbacks(runnableIncrementTime);
-					handler.postDelayed(runnableIncrementTime, 1000);
-				}
-				if(iTargetProgress != iCurrentProgress)
-				{										
-					ObjectAnimator animator = ObjectAnimator.ofInt(this,
+    				{
+    					bIsPerformingLongClick = false;
+    					handler.removeCallbacks(runnableEnableDragView);
+    				}
+    				return true;
+    			}				
+    			break;					
+    		case MotionEvent.ACTION_UP:
+    			int iCurrentProgress, iTargetProgress;				
+    			bIsPerformingLongClick = false;
+    			handler.removeCallbacks(runnableEnableDragView);
+    			if(bIsDraggingView)
+    			{
+    				setX(getX()+event.getRawX() - fTouchX);
+    				setY(getY()+event.getRawY() - fTouchY);
+    				bIsDraggingView = false;	
+    				return true;
+    			}				
+    			boolean ans = super.onTouchEvent(event);
+    			iCurrentProgress=getProgress();
+    			if(iCurrentProgress > 0.75*getMax())
+    				iTargetProgress = getMax();
+    			else if(iCurrentProgress < 0.25*getMax())				
+    				iTargetProgress = 0;
+    			else
+    				iTargetProgress = (int)(0.5 * getMax());
+    			if(iProgressPosition != iTargetProgress)
+    			{
+    				iProgressPosition = iTargetProgress;					
+    				iTimer = 0;
+    				handler.removeCallbacks(runnableIncrementTime);
+    				handler.postDelayed(runnableIncrementTime, 1000);
+    			}
+    			if(iTargetProgress != iCurrentProgress)
+    			{										
+    				ObjectAnimator animator = ObjectAnimator.ofInt(this,
 							"progress", iCurrentProgress, iTargetProgress);
-					animator.setInterpolator(new DecelerateInterpolator());
-					animator.setDuration(500);
-					animator.start();					
-				}
-				return ans;
-			}
+    				animator.setInterpolator(new DecelerateInterpolator());
+    				animator.setDuration(500);
+    				animator.start();					
+    			}
+    			return ans;
+    		}
     	}
 		return super.onTouchEvent(event);
-    }
+	}
 
     @Override
     protected synchronized void onDraw(Canvas canvas) {
