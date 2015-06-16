@@ -27,7 +27,7 @@ import android.view.animation.DecelerateInterpolator;
 public class MySeekBar extends SeekBar {
 	private int iTimer;
 	private boolean bIsDraggingView, bIsPerformingLongClick;
-	private Handler handler;    
+	private Handler handler;
 	private float fTouchX, fTouchY;
 	private float fTouchStartX, fTouchStartY;
 	private float fTextSize;
@@ -152,17 +152,17 @@ public class MySeekBar extends SeekBar {
 	 * @param params		additional params
 	 */
 	private void init(TypedArray params) {
-		handler			= new Handler();
+		handler = new Handler();
 		handler.postDelayed(runnableIncrementTime, 1000);
 
 		textPaint 	= new Paint();
 		textPaint.setTypeface(Typeface.DEFAULT_BOLD);
 
 		if(params==null)
-		{			
+		{
 			fTextSize = 40.0f;
-	        textPaint.setColor(Color.BLACK);
-	        bAlignLeft = true;
+			textPaint.setColor(Color.BLACK);
+			bAlignLeft = true;
 		}
 		else
 		{
