@@ -252,6 +252,7 @@ public class MySeekBar extends SeekBar {
 						handler.removeCallbacks(runnableIncrementTime);
 						handler.postDelayed(runnableIncrementTime, 1000);
 					}
+					
 					ObjectAnimator animator = ObjectAnimator.ofInt(this, "progress", iCurrentProgress, iTargetProgress);
 					animator.setInterpolator(new DecelerateInterpolator());
 					animator.setDuration(500);
