@@ -113,11 +113,13 @@ public class MySeekBar extends SeekBar {
     	textPaint.setTextSize(textSize);
     	if(bAlignLeft)
         {	        	
-        	setPadding((int) (getPaddingLeft()-fTextSize+textSize), getPaddingTop(), getPaddingRight(), getPaddingBottom());
+        	setPadding((int) (getPaddingLeft() - fTextSize + textSize), 
+        			getPaddingTop(), getPaddingRight(), getPaddingBottom());
         }
         else
         {
-        	setPadding(getPaddingLeft(), getPaddingTop(), (int) (getPaddingRight()-fTextSize+textSize), getPaddingBottom());
+        	setPadding(getPaddingLeft(), getPaddingTop(), (int)	
+        			(getPaddingRight() - fTextSize + textSize), getPaddingBottom());
         }
     	invalidate();
     }
@@ -135,12 +137,14 @@ public class MySeekBar extends SeekBar {
 	    	if(bAlignLeft)
 	        {	        	
 	    		textPaint.setTextAlign(Align.LEFT);
-	        	setPadding((int) (getPaddingLeft()+fTextSize), getPaddingTop(), (int) (getPaddingRight()-fTextSize), getPaddingBottom());
+	        	setPadding((int) (getPaddingLeft() + fTextSize), getPaddingTop(), 
+	        			(int) (getPaddingRight() - fTextSize), getPaddingBottom());
 	        }
 	        else
 	        {
 	        	textPaint.setTextAlign(Align.RIGHT);
-	        	setPadding((int) (getPaddingLeft()-fTextSize), getPaddingTop(), (int) (getPaddingRight()+fTextSize), getPaddingBottom());
+	        	setPadding((int) (getPaddingLeft() - fTextSize), getPaddingTop(), 
+	        			(int) (getPaddingRight() + fTextSize), getPaddingBottom());
 	        }
     	}
     	invalidate();
@@ -167,9 +171,12 @@ public class MySeekBar extends SeekBar {
 		else
 		{
 	        try {
-	        	textPaint.setColor(params.getColor(R.styleable.MySeekBar_textColor, Color.BLACK));
-	        	bAlignLeft=params.getBoolean(R.styleable.MySeekBar_textAlignLeft, true);
-	        	fTextSize=params.getDimension(R.styleable.MySeekBar_textSize, 40.0f);
+	        	textPaint.setColor(params.getColor(
+	        			R.styleable.MySeekBar_textColor, Color.BLACK));
+	        	bAlignLeft=params.getBoolean(
+	        			R.styleable.MySeekBar_textAlignLeft, true);
+	        	fTextSize=params.getDimension(
+	        			R.styleable.MySeekBar_textSize, 40.0f);
 	        } finally {
 	        	params.recycle();
 	        }	        	      
@@ -178,12 +185,14 @@ public class MySeekBar extends SeekBar {
 		if(bAlignLeft)
         {
         	textPaint.setTextAlign(Align.LEFT);
-        	setPadding((int) (getPaddingLeft()+fTextSize), getPaddingTop(), getPaddingRight(), getPaddingBottom());
+        	setPadding((int) (getPaddingLeft() + fTextSize), getPaddingTop(),
+        			getPaddingRight(), getPaddingBottom());
         }
         else
         {
         	textPaint.setTextAlign(Align.RIGHT);
-        	setPadding(getPaddingLeft(), getPaddingTop(), (int) (getPaddingRight()+fTextSize), getPaddingBottom());
+        	setPadding(getPaddingLeft(), getPaddingTop(), (int) (getPaddingRight()
+        			+ fTextSize), getPaddingBottom());
         }
 		iProgressPosition = getProgress();
 	}       
@@ -195,8 +204,8 @@ public class MySeekBar extends SeekBar {
 			switch (event.getAction())
 			{
 			case MotionEvent.ACTION_DOWN:				
-				fTouchX=event.getRawX();
-				fTouchY=event.getRawY();
+				fTouchX = event.getRawX();
+				fTouchY = event.getRawY();
 				fTouchStartX = fTouchX;
 				fTouchStartY = fTouchY;
 				bIsPerformingLongClick = true;
@@ -205,17 +214,18 @@ public class MySeekBar extends SeekBar {
 			case MotionEvent.ACTION_MOVE:
 				if(bIsDraggingView)
 				{
-					setX(getX()+event.getRawX()-fTouchX);
-					setY(getY()+event.getRawY()-fTouchY);
-					fTouchX=event.getRawX();
-					fTouchY=event.getRawY();
+					setX(getX() + event.getRawX() - fTouchX);
+					setY(getY() + event.getRawY() - fTouchY);
+					fTouchX = event.getRawX();
+					fTouchY = event.getRawY();
 					return true;
 				}
 				else if(bIsPerformingLongClick)
 				{
-					fTouchX=event.getRawX();
-					fTouchY=event.getRawY();
-					if(Math.sqrt(Math.pow(fTouchStartX-fTouchX,2)+Math.pow(fTouchStartY-fTouchY, 2))>50)
+					fTouchX = event.getRawX();
+					fTouchY = event.getRawY();
+					if(Math.sqrt(Math.pow(fTouchStartX - fTouchX,2) 
+							+ Math.pow(fTouchStartY - fTouchY, 2)) > 50)
 					{
 						bIsPerformingLongClick = false;
 						handler.removeCallbacks(runnableEnableDragView);
@@ -230,19 +240,19 @@ public class MySeekBar extends SeekBar {
 				handler.removeCallbacks(runnableEnableDragView);
 				if(bIsDraggingView)
 				{
-					setX(getX()+event.getRawX()-fTouchX);
-					setY(getY()+event.getRawY()-fTouchY);
+					setX(getX()+event.getRawX() - fTouchX);
+					setY(getY()+event.getRawY() - fTouchY);
 					bIsDraggingView = false;	
 					return true;
 				}				
 				boolean ans = super.onTouchEvent(event);
 				iCurrentProgress=getProgress();
-				if(iCurrentProgress>0.75*getMax())
+				if(iCurrentProgress > 0.75*getMax())
 					iTargetProgress = getMax();
-				else if(iCurrentProgress<0.25*getMax())				
+				else if(iCurrentProgress < 0.25*getMax())				
 					iTargetProgress = 0;
 				else
-					iTargetProgress = (int)(0.5*getMax());
+					iTargetProgress = (int)(0.5 * getMax());
 				if(iProgressPosition != iTargetProgress)
 				{
 					iProgressPosition = iTargetProgress;					
@@ -250,9 +260,10 @@ public class MySeekBar extends SeekBar {
 					handler.removeCallbacks(runnableIncrementTime);
 					handler.postDelayed(runnableIncrementTime, 1000);
 				}
-				if(iTargetProgress!=iCurrentProgress)
+				if(iTargetProgress != iCurrentProgress)
 				{										
-					ObjectAnimator animator = ObjectAnimator.ofInt(this, "progress", iCurrentProgress, iTargetProgress);
+					ObjectAnimator animator = ObjectAnimator.ofInt(this,
+							"progress", iCurrentProgress, iTargetProgress);
 					animator.setInterpolator(new DecelerateInterpolator());
 					animator.setDuration(500);
 					animator.start();					
@@ -266,6 +277,7 @@ public class MySeekBar extends SeekBar {
     @Override
     protected synchronized void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-    	canvas.drawText(Integer.toString(iTimer), bAlignLeft?0:getWidth(), getHeight()*0.9f, textPaint);
+    	canvas.drawText(Integer.toString(iTimer), bAlignLeft ? 0 : getWidth(),
+    			getHeight() * 0.9f, textPaint);
     }
 }

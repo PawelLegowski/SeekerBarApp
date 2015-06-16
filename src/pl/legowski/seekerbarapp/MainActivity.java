@@ -11,9 +11,7 @@ public class MainActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		MySeekBar seekBar;
-		seekBar = (MySeekBar)findViewById(R.id.mySeekBar);		
+		super.onCreate(savedInstanceState);	
 		setContentView(R.layout.activity_main);
 	}
 
