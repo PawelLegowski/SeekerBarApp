@@ -25,14 +25,15 @@ import android.view.animation.DecelerateInterpolator;
  * @since 2015-06-16
  */
 public class MySeekBar extends SeekBar {
-	int iTimer;
-	boolean bIsDraggingView, bIsPerformingLongClick;
+	private int iTimer;
+	private boolean bIsDraggingView, bIsPerformingLongClick;
     private Handler handler;    
     private float fTouchX, fTouchY;
     private float fTouchStartX, fTouchStartY;
     private float fTextSize;
-	Paint textPaint;
-	boolean bAlignLeft;
+	private Paint textPaint;
+	private boolean bAlignLeft;
+	private int iProgressPosition;
 	
 	/**
 	 * Runnable for scheduling time incrementation
@@ -184,6 +185,7 @@ public class MySeekBar extends SeekBar {
         	textPaint.setTextAlign(Align.RIGHT);
         	setPadding(getPaddingLeft(), getPaddingTop(), (int) (getPaddingRight()+fTextSize), getPaddingBottom());
         }
+		iProgressPosition = getProgress();
 	}       
 
 	@Override
@@ -243,16 +245,20 @@ public class MySeekBar extends SeekBar {
 					iTargetProgress = (int)(0.5*getMax());
 				if(iTargetProgress!=iCurrentProgress)
 				{
-					iTimer = 0;
-					handler.removeCallbacks(runnableIncrementTime);
-					handler.postDelayed(runnableIncrementTime, 1000);
+					if(iProgressPosition != iTargetProgress)
+					{
+						iProgressPosition = iTargetProgress;					
+						iTimer = 0;
+						handler.removeCallbacks(runnableIncrementTime);
+						handler.postDelayed(runnableIncrementTime, 1000);
+					}
 					ObjectAnimator animator = ObjectAnimator.ofInt(this, "progress", iCurrentProgress, iTargetProgress);
 					animator.setInterpolator(new DecelerateInterpolator());
 					animator.setDuration(500);
 					animator.start();					
 				}
 			return ans;
-			}  	
+			}
     	}
 		return super.onTouchEvent(event);
     }
