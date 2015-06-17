@@ -117,6 +117,7 @@ public class MySeekBar extends SeekBar {
 			setPadding(getPaddingLeft(), getPaddingTop(), (int)	
 					(getPaddingRight() - fTextSize + textSize), getPaddingBottom());
 		}
+		fTextSize = textSize;
 		invalidate();
 	}
 	
